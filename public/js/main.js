@@ -19695,14 +19695,52 @@ module.exports = ListManager;
 
 },{"./List.jsx":171,"react":167}],174:[function(require,module,exports){
 var React = require('react');
+
+var WeatherDisplay = React.createClass({
+    displayName: "WeatherDisplay",
+
+    render: function () {
+        var divStyle = {
+            height: 200,
+            marginTop: 20,
+            paddingTop: 40,
+            backgroundColor: "#ffb732",
+            color: "white",
+            textAlign: "center"
+        };
+        return React.createElement(
+            "div",
+            { className: "panel panel-default", style: divStyle },
+            React.createElement(
+                "h1",
+                null,
+                this.props.temperature,
+                "°"
+            ),
+            React.createElement(
+                "p",
+                null,
+                this.props.city
+            )
+        );
+    }
+});
+
+module.exports = WeatherDisplay;
+
+},{"react":167}],175:[function(require,module,exports){
+var React = require('react');
 var ReactDOM = require('react-dom');
 var ListManager = require('./components/ListManager.jsx');
 var DataDisplayManager = require('./components/DataDisplayManager.jsx');
 var DisplayComponent = require('./components/DisplayComponent.jsx');
+var WeatherDisplay = require('./components/WeatherDisplay.jsx');
 
 //ReactDOM.render(<DisplayComponent title="Fuck you" />, document.getElementById('newFollowers'));
 ReactDOM.render(React.createElement(DataDisplayManager, { value: '20', text: 'New Followers added this month' }), document.getElementById('newFollowers'));
 ReactDOM.render(React.createElement(DataDisplayManager, { value: '$ 1250', text: 'Average monthly income' }), document.getElementById('monthlyIncome'));
 ReactDOM.render(React.createElement(DataDisplayManager, { value: '$ 13865', text: 'Yearly income Goal' }), document.getElementById('yearlyIncome'));
 
-},{"./components/DataDisplayManager.jsx":169,"./components/DisplayComponent.jsx":170,"./components/ListManager.jsx":173,"react":167,"react-dom":29}]},{},[174]);
+ReactDOM.render(React.createElement(WeatherDisplay, { temperature: '18', city: 'Paris' }), document.getElementById('weather'));
+
+},{"./components/DataDisplayManager.jsx":169,"./components/DisplayComponent.jsx":170,"./components/ListManager.jsx":173,"./components/WeatherDisplay.jsx":174,"react":167,"react-dom":29}]},{},[175]);
