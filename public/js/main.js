@@ -19488,6 +19488,90 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":55}],168:[function(require,module,exports){
 var React = require('react');
+var BigPanelModule = require('./BigPanelModule.jsx');
+
+var BigPanelManager = React.createClass({
+    displayName: 'BigPanelManager',
+
+    render: function () {
+
+        var items = [{ "value": 15080, "caption": "Shot Views" }, { "value": 12000, "caption": "Likes" }, { "value": 5100, "caption": "Comments" }];
+
+        var divStyle = {
+            height: 150
+        };
+
+        var panelHeading = {
+            backgroundColor: "pink",
+            height: 200
+        };
+
+        if (this.props.headingColor) {
+            panelHeading.backgroundColor = this.props.headingColor;
+        }
+
+        var panelBody = {
+            color: "white",
+            backgroundColor: "#484d4d",
+            height: "auto"
+        };
+
+        var panelModule = items.map(function (item) {
+            return React.createElement(BigPanelModule, { value: item.value, caption: item.caption });
+        });
+
+        return React.createElement(
+            'div',
+            { className: 'panel panel-default', style: divStyle },
+            React.createElement('div', { style: panelHeading }),
+            React.createElement(
+                'div',
+                { className: 'panel-body', style: panelBody },
+                panelModule
+            )
+        );
+    }
+});
+
+module.exports = BigPanelManager;
+
+},{"./BigPanelModule.jsx":169,"react":167}],169:[function(require,module,exports){
+var React = require('react');
+
+var BigPanelModule = React.createClass({
+    displayName: "BigPanelModule",
+
+    render: function () {
+
+        var valuePositioning = {
+            marginTop: 12
+        };
+
+        var captionPositioning = {
+            marginTop: -15
+        };
+
+        return React.createElement(
+            "div",
+            { className: "col-sm-4 text-center" },
+            React.createElement(
+                "h2",
+                { style: valuePositioning },
+                this.props.value
+            ),
+            React.createElement(
+                "p",
+                { style: captionPositioning },
+                this.props.caption
+            )
+        );
+    }
+});
+
+module.exports = BigPanelModule;
+
+},{"react":167}],170:[function(require,module,exports){
+var React = require('react');
 
 var DataDisplayItem = React.createClass({
     displayName: "DataDisplayItem",
@@ -19524,7 +19608,7 @@ var DataDisplayItem = React.createClass({
 
 module.exports = DataDisplayItem;
 
-},{"react":167}],169:[function(require,module,exports){
+},{"react":167}],171:[function(require,module,exports){
 var React = require('react');
 var DataDisplayItem = require('./DataDisplayItem.jsx');
 
@@ -19550,150 +19634,70 @@ var DataDisplayManager = React.createClass({
 
 module.exports = DataDisplayManager;
 
-},{"./DataDisplayItem.jsx":168,"react":167}],170:[function(require,module,exports){
+},{"./DataDisplayItem.jsx":170,"react":167}],172:[function(require,module,exports){
 var React = require('react');
 
-var DisplayComponent = React.createClass({
-    displayName: 'DisplayComponent',
+var DisplayPanel = React.createClass({
+    displayName: "DisplayPanel",
 
     render: function () {
-        return React.createElement(
-            'div',
-            null,
-            React.createElement(
-                'h1',
-                null,
-                this.props.title
-            )
-        );
-    }
-});
-
-module.exports = DisplayComponent;
-
-},{"react":167}],171:[function(require,module,exports){
-var React = require('react');
-var ListItem = require('./ListItem.jsx');
-
-var List = React.createClass({
-    displayName: 'List',
-
-    render: function () {
-        var createItem = function (text, index) {
-            return React.createElement(ListItem, { key: index + text, text: text });
-        };
-
-        return React.createElement(
-            'ul',
-            null,
-            this.props.items.map(createItem)
-        );
-    }
-});
-
-module.exports = List;
-
-},{"./ListItem.jsx":172,"react":167}],172:[function(require,module,exports){
-var React = require('react');
-
-var ListItem = React.createClass({
-    displayName: 'ListItem',
-
-    render: function () {
-        return React.createElement(
-            'li',
-            null,
-            React.createElement(
-                'h4',
-                null,
-                this.props.text
-            )
-        );
-    }
-});
-
-module.exports = ListItem;
-
-},{"react":167}],173:[function(require,module,exports){
-var React = require('react');
-var List = require('./List.jsx');
-
-var ListManager = React.createClass({
-    displayName: 'ListManager',
-
-    getInitialState: function () {
-        return { items: [], newItemText: '' };
-    },
-    onChange: function (e) {
-        this.setState({ newItemText: e.target.value });
-    },
-    handleSubmit: function (e) {
-        e.preventDefault();
-
-        var currentItems = this.state.items;
-
-        currentItems.push(this.state.newItemText);
-
-        this.setState({ items: currentItems, newItemText: '' });
-    },
-    render: function () {
-
         var divStyle = {
-            marginTop: 10
+            height: 150,
+            color: "white"
         };
 
-        var headingStyle = {};
+        var panelHeading = {
+            backgroundColor: "black"
+        };
+
+        var textPositioning = {
+            marginTop: 12
+        };
+
+        var dataPositioning = {
+            marginTop: -15
+        };
 
         if (this.props.headingColor) {
-            headingStyle.background = this.props.headingColor;
+            panelHeading.backgroundColor = this.props.headingColor;
         }
 
         return React.createElement(
-            'div',
-            { style: divStyle, className: 'col-sm-4' },
+            "div",
+            { className: "panel panel-default", style: divStyle },
             React.createElement(
-                'div',
-                { className: 'panel panel-primary' },
+                "div",
+                { "class": "panel-heading", style: panelHeading },
                 React.createElement(
-                    'div',
-                    { style: headingStyle, className: 'panel-heading' },
+                    "div",
+                    { className: "container" },
                     React.createElement(
-                        'h3',
-                        null,
-                        this.props.title
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'row panel-body' },
+                        "p",
+                        { style: textPositioning },
+                        React.createElement(
+                            "small",
+                            null,
+                            this.props.text
+                        )
+                    ),
                     React.createElement(
-                        'form',
-                        { onSubmit: this.handleSubmit },
+                        "h1",
+                        { style: dataPositioning, "class": "panel-title" },
                         React.createElement(
-                            'div',
-                            { className: 'col-sm-9' },
-                            React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newItemText })
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'col-sm-2' },
-                            React.createElement(
-                                'button',
-                                { className: 'btn btn-primary' },
-                                'Add'
-                            )
+                            "strong",
+                            null,
+                            this.props.data
                         )
                     )
-                ),
-                React.createElement(List, { items: this.state.items })
+                )
             )
         );
     }
 });
 
-module.exports = ListManager;
+module.exports = DisplayPanel;
 
-},{"./List.jsx":171,"react":167}],174:[function(require,module,exports){
+},{"react":167}],173:[function(require,module,exports){
 var React = require('react');
 
 var WeatherDisplay = React.createClass({
@@ -19728,19 +19732,27 @@ var WeatherDisplay = React.createClass({
 
 module.exports = WeatherDisplay;
 
-},{"react":167}],175:[function(require,module,exports){
+},{"react":167}],174:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ListManager = require('./components/ListManager.jsx');
 var DataDisplayManager = require('./components/DataDisplayManager.jsx');
-var DisplayComponent = require('./components/DisplayComponent.jsx');
+var DisplayPanel = require('./components/DisplayPanel.jsx');
 var WeatherDisplay = require('./components/WeatherDisplay.jsx');
+var BigPanelManager = require('./components/BigPanelManager.jsx');
 
 //ReactDOM.render(<DisplayComponent title="Fuck you" />, document.getElementById('newFollowers'));
 ReactDOM.render(React.createElement(DataDisplayManager, { value: '20', text: 'New Followers added this month' }), document.getElementById('newFollowers'));
 ReactDOM.render(React.createElement(DataDisplayManager, { value: '$ 1250', text: 'Average monthly income' }), document.getElementById('monthlyIncome'));
 ReactDOM.render(React.createElement(DataDisplayManager, { value: '$ 13865', text: 'Yearly income Goal' }), document.getElementById('yearlyIncome'));
 
+ReactDOM.render(React.createElement(BigPanelManager, { headingColor: '#0096d0' }), document.getElementById('big1'));
+ReactDOM.render(React.createElement(BigPanelManager, { headingColor: '#cd59ae' }), document.getElementById('big2'));
+
 ReactDOM.render(React.createElement(WeatherDisplay, { temperature: '18', city: 'Paris' }), document.getElementById('weather'));
 
-},{"./components/DataDisplayManager.jsx":169,"./components/DisplayComponent.jsx":170,"./components/ListManager.jsx":173,"./components/WeatherDisplay.jsx":174,"react":167,"react-dom":29}]},{},[175]);
+ReactDOM.render(React.createElement(DisplayPanel, { text: 'New visitors', data: '1.5k', headingColor: '#0096d0' }), document.getElementById('newVisitors'));
+ReactDOM.render(React.createElement(DisplayPanel, { text: 'Bounce Rate', data: '50%', headingColor: '#b28ad6' }), document.getElementById('bounceRate'));
+ReactDOM.render(React.createElement(DisplayPanel, { text: 'Searches', data: '28%', headingColor: '#ff4826' }), document.getElementById('searches'));
+ReactDOM.render(React.createElement(DisplayPanel, { text: 'Traffic', data: '140.5 kb', headingColor: '#63c254' }), document.getElementById('traffic'));
+
+},{"./components/BigPanelManager.jsx":168,"./components/DataDisplayManager.jsx":171,"./components/DisplayPanel.jsx":172,"./components/WeatherDisplay.jsx":173,"react":167,"react-dom":29}]},{},[174]);
